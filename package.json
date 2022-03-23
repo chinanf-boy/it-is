@@ -1,0 +1,43 @@
+{
+  "name": "it-is",
+  "version": "1.0.0",
+  "description": "Autocomplete utils for UnoCSS",
+  "keywords": [
+    "snake"
+  ],
+  "homepage": "https://github.com/chinanf-boy/it-is/tree/main/packages/autocomplete#readme",
+  "bugs": {
+    "url": "https://github.com/chinanf-boy/it-is/issues"
+  },
+  "license": "MIT",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinanf-boy/it-is.git",
+    "directory": "packages/autocomplete"
+  },
+  "funding": "https://github.com/sponsors/chinanf-boy",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub",
+    "test": "vitest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "unbuild": "^0.7.0",
+    "vitest": "^0.7.10"
+  }
+}
