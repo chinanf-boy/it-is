@@ -5,7 +5,7 @@
   "keywords": [
     "snake"
   ],
-  "homepage": "https://github.com/chinanf-boy/it-is/tree/main#readme",
+  "homepage": "https://github.com/chinanf-boy/it-is#readme",
   "bugs": {
     "url": "https://github.com/chinanf-boy/it-is/issues"
   },
@@ -22,7 +22,8 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
@@ -32,10 +33,12 @@
   "scripts": {
     "build": "unbuild",
     "stub": "unbuild --stub",
-    "test": "vitest"
+    "test": "vitest",
+    "prepublishOnly": "pnpm build"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@antfu/eslint-config": "^0.18.9",
+    "eslint": "^8.11.0",
     "unbuild": "^0.7.0",
     "vitest": "^0.7.10"
   }
