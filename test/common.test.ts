@@ -1,53 +1,72 @@
-import It, {ItIs, ItIsAsync} from ".."
-import { assert, describe, expect, it, test } from 'vitest'
+import { describe, expect, it, vitest } from 'vitest'
+import * as It from '../dist/index.cjs'
+
+const { ItIs, ItIsAsync } = It
 
 describe('it-is', () => {
   it('should be 1', () => {
-    // console.time("count")
-    const first = "1"
-    let ok = false
-    const testArr = new Array(10000);
+    const first = '1'
+    const testArr = new Array(10000)
+    const mockCallback = vitest.fn(x => x[0])
 
-    let util = new ItIs(first)
-    let newUtil;
-    testArr.forEach(_ => {
-      if(newUtil) {
-        newUtil = newUtil.is(2).then((what) => {
-          console.log(what)
-        })
+    const Switch = new ItIs(first)
+    let newSwitch
+    testArr.forEach((_) => {
+      if (newSwitch) {
+        newSwitch = newSwitch.is(2).then(mockCallback)
         return
       }
-      newUtil = util.is(2).then((what) => {
-        console.log(what)
-      })
+      newSwitch = Switch.is(2).then(mockCallback)
     })
-    util.is('1').then((what) => {
-      ok = true
-      expect(ok).toBe(true)
-      // console.timeEnd("count")
-    })
+    Switch.is('1').then(mockCallback).then(mockCallback)
+
+    expect(mockCallback.mock.calls.length).toBe(2)
+  })
+  it('寻找类型', () => {
+    const type = '打开'
+    const mockCallback = vitest.fn(x => x[0])
+
+    const SWITCH = new ItIs(type)
+    SWITCH.is('播放').then(mockCallback).then(mockCallback)
+    /* 不运行 */
+    expect(mockCallback.mock.calls.length).toBe(0)
+
+    SWITCH.is('打开')
+      .then(mockCallback)
+      .then(mockCallback)
+      .is('aa')
+      ?.then(mockCallback)
+      .then(mockCallback)
+
+    expect(mockCallback.mock.calls.length).toBe(2)
   })
 })
 
 describe('it-is-async', () => {
   it('要是最后', () => {
-    console.time("count-async")
-    const first = "1"
-    let ok = false
-    const testArr = new Array(10000);
-    console.log(1111)
+    const first = '1'
+    const testArr = new Array(10000)
+    const mockCallback = vitest.fn(x => x[0])
 
-    let util = new ItIsAsync(first)
-    testArr.forEach(_ => {
-      util = util.is(2).then((what) => {
-        // console.log(what)
-      })
+    let Switch = new ItIsAsync(first)
+    testArr.forEach((_) => {
+      Switch = Switch.is(2).then(mockCallback)
     })
-    util.is('1').then((what) => {
-      ok = true
-      console.timeEnd("count-async")
-      console.log(1111)
-      expect(ok).toBe(true)
+    Switch.is('2').is('1').then(mockCallback)
+
+    setTimeout(() => expect(mockCallback.mock.calls.length).toBe(1), 0)
+  })
+
+  it('+1, 再 +1', () => {
+    const first = '3'
+    const testArr = new Array(10000)
+    const mockCallback = vitest.fn(x => x[0])
+
+    let Switch = new ItIsAsync(first)
+    testArr.forEach((_) => {
+      Switch = Switch.is(2).then(mockCallback)
     })
+    Switch.is('1').is('3').then(mockCallback).then(mockCallback)
+    setTimeout(() => expect(mockCallback.mock.calls.length).toBe(2), 0)
   })
 })
