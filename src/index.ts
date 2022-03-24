@@ -102,8 +102,3 @@ export class ItIsAsync {
     this.callbacks = []
   }
 }
-
-export default {
-  ItIs,
-  ItIsAsync,
-}
